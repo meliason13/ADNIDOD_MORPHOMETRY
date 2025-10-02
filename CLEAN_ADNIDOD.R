@@ -117,6 +117,33 @@ MichelleProject_SAcodes <- MichelleProject[, MichelleProject_SAnames]
 # (Re-assign variable_names; identical to earlier line, retained as in your script)
 variable_names <- colnames(MichelleProjectclean)[10:152]
 
+#----------------------------------
+#Extract specific outcomes of TA/SA 
+
+# KMO Updated TA Groups
+tbi_data_TA_KMO <- MichelleProjectclean[MichelleProjectclean$COHORT == 2, c("ST105TA", "ST109TA", "ST43TA", "ST119TA", "ST82TA", "ST104TA", "ST32TA", "ST74TA", "ST83TA", "ST121TA", "ST26TA", "ST51TA", "ST93TA", "ST23TA", "ST15TA", "ST39TA", "ST95TA", "ST55TA", "ST35TA", "ST36TA", "ST106TA", "ST108TA", "ST97TA", "ST62TA", "ST94TA", "ST111TA", "ST45TA", "ST52TA", "ST99TA", "ST115TA", "ST47TA", "ST56TA", "ST31TA", "ST102TA", "ST58TA", "ST90TA", "ST85TA", "ST117TA", "ST49TA", "ST59TA", "ST38TA", "ST40TA", "ST91TA", "ST116TA", "ST46TA", "ST57TA", "ST72TA", "ST118TA")]
+control_data_TA_KMO <- MichelleProjectclean[MichelleProjectclean$COHORT == 3, c("ST105TA", "ST109TA", "ST43TA", "ST119TA", "ST82TA", "ST104TA", "ST32TA", "ST74TA", "ST83TA", "ST121TA", "ST26TA", "ST51TA", "ST93TA", "ST23TA", "ST15TA", "ST39TA", "ST95TA", "ST55TA", "ST35TA", "ST36TA", "ST106TA", "ST108TA", "ST97TA", "ST62TA", "ST94TA", "ST111TA", "ST45TA", "ST52TA", "ST99TA", "ST115TA", "ST47TA", "ST56TA", "ST31TA", "ST102TA", "ST58TA", "ST90TA", "ST85TA", "ST117TA", "ST49TA", "ST59TA", "ST38TA", "ST40TA", "ST91TA", "ST116TA", "ST46TA", "ST57TA", "ST72TA", "ST118TA")]
+
+# KMO Updated SA Groups
+tbi_data_SA_KMO <- MichelleProjectclean[MichelleProjectclean$COHORT == 2, c("ST23SA", "ST73SA", "ST104SA", "ST45SA", "ST113SA", "ST103SA", "ST55SA", "ST72SA", "ST34SA", "ST51SA", "ST119SA", "ST102SA", "ST57SA", "ST58SA", "ST59SA", "ST13SA", "ST114SA", "ST108SA", "ST31SA", "ST35SA", "ST111SA", "ST38SA", "ST56SA", "ST118SA", "ST47SA", "ST49SA", "ST52SA", "ST14SA", "ST115SA", "ST110SA", "ST50SA", "ST130SA", "ST32SA", "ST36SA", "ST62SA", "ST109SA", "ST39SA", "ST26SA", "ST121SA", "ST105SA", "ST40SA", "ST54SA", "ST87SA", "ST28SA")]
+control_data_SA_KMO <- MichelleProjectclean[MichelleProjectclean$COHORT == 3, c("ST23SA", "ST73SA", "ST104SA", "ST45SA", "ST113SA", "ST103SA", "ST55SA", "ST72SA", "ST34SA", "ST51SA", "ST119SA", "ST102SA", "ST57SA", "ST58SA", "ST59SA", "ST13SA", "ST114SA", "ST108SA", "ST31SA", "ST35SA", "ST111SA", "ST38SA", "ST56SA", "ST118SA", "ST47SA", "ST49SA", "ST52SA", "ST14SA", "ST115SA", "ST110SA", "ST50SA", "ST130SA", "ST32SA", "ST36SA", "ST62SA", "ST109SA", "ST39SA", "ST26SA", "ST121SA", "ST105SA", "ST40SA", "ST54SA", "ST87SA", "ST28SA")]
+
+#PRE-DEFINE COHORT GROUPS
+
+# TA Groups
+tbi_data_TA <- MichelleProjectclean[MichelleProjectclean$COHORT == 2, MichelleProject_TAnames]
+control_data_TA <- MichelleProjectclean[MichelleProjectclean$COHORT == 3, MichelleProject_TAnames]
+
+# SA Groups
+tbi_data_SA <- MichelleProjectclean[MichelleProjectclean$COHORT == 2, MichelleProject_SAnames]
+control_data_SA <- MichelleProjectclean[MichelleProjectclean$COHORT == 3, MichelleProject_SAnames]
+
+#SATA Groups 
+
+# Subset TBI and Control Groups using predefined MichelleProject_SATAnames
+tbi_data_SATA <- MichelleProjectclean[MichelleProjectclean$COHORT == 2, MichelleProject_SATAnames]
+control_data_SATA <- MichelleProjectclean[MichelleProjectclean$COHORT == 3, MichelleProject_SATAnames]
+
 
 # -----------------------------
 # Region name mappings for SA and TA (for labeling/reporting)
