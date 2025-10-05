@@ -50,121 +50,122 @@ This section of the workflow imports the dataset, evaluates missing values, iden
 
 Script 2 : DescriptiveStats_ADNIDOD
 
+# ===============================================================
+# README: DESCRIPTIVE STATISTICS & VISUALIZATION PIPELINE (R)
+# ===============================================================
+
 # ---------------------------------------------------------------
 # 1. PROJECT OVERVIEW
 # ---------------------------------------------------------------
-# Script Name: Descriptive_Statistics_Morphometry.R
 # Purpose:
-#   Generates descriptive statistics and visualizations (tables, boxplots)
-#   for categorical and continuous morphometry variables (cortical thickness
-#   and surface area) across diagnostic cohorts (e.g., TBI vs Control).
+**#   Generates descriptive statistics and visualizations (tables and boxplots)
+**#   for categorical and continuous morphometry variables (cortical thickness
+**#   and surface area) across diagnostic cohorts (for example, TBI vs Control).
 # Context of Use:
-#   Exploratory data analysis and quality control for neuroimaging datasets.
+**#   Exploratory data analysis and quality control for neuroimaging datasets.
 
 # ---------------------------------------------------------------
 # 2. REPOSITORY STRUCTURE
 # ---------------------------------------------------------------
 # project_root/
-# ├── data/
-# │   ├── MichelleProjectclean.csv
-# │   ├── MP_TAtbi.csv, MP_TAcontrol.csv
-# │   ├── MP_SAtbi.csv, MP_SAcontrol.csv
-# │   └── full_names_TA_SA_labels.csv
-# ├── scripts/
-# │   └── Descriptive_Statistics_Morphometry.R
-# ├── outputs/
-# │   ├── Descriptive_Statistics_TBI_TA.csv
-# │   ├── Descriptive_Statistics_Control_TA.csv
-# │   ├── Descriptive_Statistics_TBI_SA.csv
-# │   ├── Descriptive_Statistics_Control_SA.csv
-# │   └── Boxplots/
-# └── docs/
-#     └── Data_Dictionary.xlsx
+**# ├── data/
+**# │   ├── MichelleProjectclean.csv
+**# │   ├── MP_TAtbi.csv, MP_TAcontrol.csv
+**# │   ├── MP_SAtbi.csv, MP_SAcontrol.csv
+**# │   └── full_names_TA_SA_labels.csv
+**# ├── scripts/
+**# │   └── Descriptive_Statistics_Morphometry.R
+**# ├── outputs/
+**# │   ├── Descriptive_Statistics_TBI_TA.csv
+**# │   ├── Descriptive_Statistics_Control_TA.csv
+**# │   ├── Descriptive_Statistics_TBI_SA.csv
+**# │   ├── Descriptive_Statistics_Control_SA.csv
+**# │   └── Boxplots/
+**# └── docs/
+**#     └── Data_Dictionary.xlsx
 
 # ---------------------------------------------------------------
 # 3. DATA REQUIREMENTS
 # ---------------------------------------------------------------
-# Primary Dataset: MichelleProjectclean
+**# Primary Dataset: MichelleProjectclean
 #   - Includes:
-#       * COHORT (integer; 2 = TBI, 3 = Control)
-#       * Handedness (categorical)
-#       * Columns 10–152: morphometry variables (TA/SA)
+**#       * COHORT (integer; 2 = TBI, 3 = Control)
+**#       * Handedness (categorical)
+**#       * Columns 10–152: morphometry variables (TA/SA)
 # Auxiliary Datasets:
-#   - MP_TAtbi, MP_TAcontrol, MP_SAtbi, MP_SAcontrol
-#   - full_names_TA, full_names_SA (mappings from codes to full region names)
+**#   - MP_TAtbi, MP_TAcontrol, MP_SAtbi, MP_SAcontrol
+**#   - full_names_TA, full_names_SA (mappings from codes to full region names)
 
 # ---------------------------------------------------------------
 # 4. DEPENDENCIES
 # ---------------------------------------------------------------
-# R Version: ≥ 4.2.0
-# Required Packages:
-#   - dplyr     → data manipulation and summaries
-#   - tidyr     → reshaping data (pivoting)
-#   - ggplot2   → plotting and visualization
-#   - utils     → file read/write, View()
-#   - stats     → summary statistics (mean, sd, IQR)
+**# R Version: ≥ 4.2.0
+**# Required Packages:
+**#   - dplyr     → data manipulation and summaries
+**#   - tidyr     → reshaping data (pivoting)
+**#   - ggplot2   → plotting and visualization
+**#   - utils     → file read/write, View()
+**#   - stats     → summary statistics (mean, sd, IQR)
 # Recommended:
-#   - sessioninfo or renv for reproducibility tracking
+**#   - sessioninfo or renv for reproducibility tracking
 
 # ---------------------------------------------------------------
 # 5. SCRIPT WORKFLOW
 # ---------------------------------------------------------------
 # A. Setup
-#    - Load packages, disable scientific notation.
+**#    - Load packages and disable scientific notation.
 # B. Categorical Summaries
-#    - Use categorical_summary_clean() to summarize COHORT and Handedness.
+**#    - Use categorical_summary_clean() to summarize COHORT and Handedness.
 # C. Continuous Summaries
-#    - Split by cohort (COHORT == 2, COHORT == 3)
-#    - Compute mean, sd, median, mode, IQR
+**#    - Split by cohort (COHORT == 2, COHORT == 3)
+**#    - Compute mean, sd, median, mode, IQR
 # D. Visualization
-#    - Base R boxplots and jitter plots by group.
-#    - ggplot2 boxplots with mean/SD annotations.
+**#    - Create base R boxplots and jitter plots by group.
+**#    - Create ggplot2 boxplots with mean/SD annotations.
 # E. TA/SA Summaries
-#    - Repeat analyses separately for thickness (TA) and surface area (SA).
+**#    - Repeat analyses separately for cortical thickness (TA) and surface area (SA).
 # F. Output
-#    - Export descriptive statistics as CSV.
-#    - Optionally view interactively via View() in RStudio.
+**#    - Export descriptive statistics as CSV.
+**#    - Optionally view interactively in RStudio using View().
 
 # ---------------------------------------------------------------
 # 6. OUTPUTS PRODUCED
 # ---------------------------------------------------------------
 # Descriptive CSV Files:
-#   - Descriptive_Statistics_TBI_TA.csv
-#   - Descriptive_Statistics_Control_TA.csv
-#   - Descriptive_Statistics_TBI_SA.csv
-#   - Descriptive_Statistics_Control_SA.csv
+**#   - Descriptive_Statistics_TBI_TA.csv
+**#   - Descriptive_Statistics_Control_TA.csv
+**#   - Descriptive_Statistics_TBI_SA.csv
+**#   - Descriptive_Statistics_Control_SA.csv
 # Combined Data Frames:
-#   - combined_desc_stats_TA / combined_desc_stats_SA
+**#   - combined_desc_stats_TA and combined_desc_stats_SA
 # Visuals:
-#   - Boxplots comparing TBI vs Control for each region
-#   - Jittered individual-level data points
+**#   - Boxplots comparing TBI vs Control for each region
+**#   - Jittered individual-level data points
 
 # ---------------------------------------------------------------
 # 7. QUALITY CONTROL CHECKLIST
 # ---------------------------------------------------------------
-# All morphometry columns are numeric.
-# COHORT only contains values {2, 3}.
-# Group subsets have identical column orders.
-# Boxplot scales are consistent across variables.
-# Means/SDs fall within biologically plausible ranges.
-# Outliers reviewed or documented in QC logs.
+**# - All morphometry columns are numeric.
+**# - COHORT only contains values {2, 3}.
+**# - Group subsets have identical column orders.
+**# - Boxplot scales are consistent across variables.
+**# - Means and SDs fall within biologically plausible ranges.
+**# - Outliers are reviewed or documented in QC logs.
 
 # ---------------------------------------------------------------
 # 8. REPRODUCIBILITY NOTES
 # ---------------------------------------------------------------
-# - Save R session info (sessionInfo()) for package versions.
-# - Use consistent random seed if introducing sampling.
-# - Keep Data_Dictionary.xlsx synced with column updates.
-# - Document any code changes or version bumps in CHANGELOG.txt.
+**# - Save R session info (sessionInfo()) for package versions.
+**# - Use a consistent random seed if sampling or bootstrapping.
+**# - Keep Data_Dictionary.xlsx updated with column definitions.
+**# - Document any code changes or version updates in CHANGELOG.txt.
 
 # ---------------------------------------------------------------
 # 9. CONTACT & AUTHORSHIP
 # ---------------------------------------------------------------
-# Author: Michelle Eliason, MS, OTR/L
-# Affiliation: Buffalo Occupational Therapy / University at Buffalo
-# Contact: mcreiner@buffalo.edu
+**# Author: Michelle Eliason, MS, OTR/L
+**# Affiliation: Buffalo Occupational Therapy / University at Buffalo
+**# Contact: mcreiner@buffalo.edu
 # Citation:
-#   Eliason, M. (2025). Descriptive Statistics and Visualization Pipeline
-#   for Morphometric Analysis (R Script). 
-
-
+**#   Eliason, M. (2025). Descriptive Statistics and Visualization Pipeline
+**#   for Morphometric Analysis (R Script).
