@@ -116,5 +116,110 @@ It supports exploratory data analysis and quality control of morphometric featur
 - Author: Michelle Eliason, MS, OTR/L  
 - Affiliation: Buffalo Occupational Therapy / University at Buffalo  
 - Citation:  
-  Eliason, M. (2025). *Descriptive Statistics and Visualization Pipeline for Morphometric Analysis (R Script).* 
+  Eliason, M. (2025). *Descriptive Statistics and Visualization Pipeline for Morphometric Analysis (R Script).*
+
+Script 3: NormalityTets_ADNIDOD.R
+
+# ADNIDOD_MORPHOMETRY
+
+Script 3 : NORMALITY_AND_GROUP_COMPARISONS.R
+
+## Purpose
+This section evaluates normality assumptions and between-group differences 
+(TBI vs. Control) for both independent and morphometric variables.  
+It applies Shapiro–Wilk tests for normality, t-tests for parametric comparisons, 
+and Mann–Whitney U tests for nonparametric alternatives.
+
+---
+
+### 1. View cleaned dataset
+- Confirm contents of `MichelleProjectclean` prior to statistical testing  
+  `View(MichelleProjectclean)`
+
+---
+
+### 2. Normality testing for independent variables
+- Run Shapiro–Wilk tests across all variables for:
+  - `ind_var_tbi` (TBI group)
+  - `ind_var_control` (Control group)
+- Extract and store test statistics (`W`) and p-values in summary tables
+- Combine results for side-by-side comparison (`shapiro_results_combined`)
+- View results interactively in RStudio (`View()`)
+
+---
+
+### 3. Group comparison: Independent variables
+- Conduct t-test for `MoCA ~ COHORT`  
+  - `var.equal = TRUE` assumes equal variances between groups
+- Perform Mann–Whitney U tests for nonparametric variables:
+  - `Education`, `Age.at.Exam`, `GDS`, and `CAPS`
+- Store and print all results in a named list for review
+
+---
+
+### 4. Shapiro–Wilk tests for cortical thickness (TA)
+- Remove `COHORT` column from TA group datasets
+- Run Shapiro–Wilk tests separately for:
+  - `MP_TAtbi_filtered` (TBI)
+  - `MP_TAcontrol_filtered` (Control)
+- Save each group’s W statistics and p-values into result data frames
+  (`shapiro_tbi_dep_results`, `shapiro_control_dep_results`)
+- Visualize results via `View()` for quick inspection
+
+---
+
+### 5. Group comparison: Cortical thickness (TA)
+- Define a list of TA variables presumed normally distributed (`variables_ta_norm`)
+- Loop through each variable:
+  - Run independent-samples t-test (`t.test`)
+  - Print group means and p-values directly in the console
+- Define a separate set of variables for Mann–Whitney U testing (`variables_mw_TA`)
+- Loop through each, apply `wilcox.test`, and store results in a list (`mw_results_TA`)
+
+---
+
+### 6. Shapiro–Wilk tests for surface area (SA)
+- Filter `MP_SAcontrol` and `MP_SAtbi` to exclude `COHORT`
+- Run Shapiro–Wilk tests across all SA variables for each group
+- Store test results as:
+  - `shapiro_control_dep_results_SA` (Control)
+  - `shapiro_tbi_dep_results_SA` (TBI)
+- Print and review via `View()` for distribution inspection
+
+---
+
+### 7. Group comparison: Surface area (SA)
+- Define a list of SA variables meeting normality assumptions (`variables_ttest_SA`)
+- Loop through each variable and run t-tests comparing TBI vs. Control
+- Save results in `ttest_results_SA` for later review
+- Define nonparametric SA variables (`variables_mw_SA`)
+- Loop through and run Mann–Whitney U tests, saving results as `mw_results_SA`
+
+---
+
+### 8. Outputs produced
+- `shapiro_results_combined` → summary of normality (TBI vs. Control)
+- `shapiro_tbi_dep_results` / `shapiro_control_dep_results` → TA-level normality
+- `shapiro_tbi_dep_results_SA` / `shapiro_control_dep_results_SA` → SA-level normality
+- `t_test_result` / `ttest_results_SA` → parametric group comparisons
+- `mw_results_TA` / `mw_results_SA` → nonparametric group comparisons
+
+---
+
+### 9. Notes and interpretation
+- Use p < 0.05 in Shapiro–Wilk to indicate deviation from normality.
+- If normality is violated, rely on Mann–Whitney U test instead of t-test.
+- t-tests assume independence, normality, and (for `var.equal = TRUE`) equal variances.
+- This workflow provides the foundation for subsequent effect-size or 
+  correlation analyses across cortical metrics.
+
+---
+
+## Outputs produced
+- `shapiro_results_combined` → summary of independent variable normality
+- `t_test_result` and Mann–Whitney outputs for independent variables  
+- `shapiro_tbi_dep_results`, `shapiro_control_dep_results` → TA normality results  
+- `ttest_results_SA`, `mw_results_SA` → surface area group comparisons  
+- Ready for import into subsequent modeling or visualization scripts
+
 
